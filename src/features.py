@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from collections.abc import Mapping
 
 STD_SUHU_LELEH = {"PP": 230.0, "ABS": 240.0, "PC": 300.0}
 STD_SUHU_CETAKAN = {"PP": 40.0, "ABS": 60.0, "PC": 90.0}
@@ -87,3 +88,6 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
     df["indeks_laju_tekanan"] = df["tekanan_injeksi_bar"] * df["kecepatan_injeksi_mm_s"]
 
     return df
+
+def prepare_features(values: Mapping[str, object]) -> pd.DataFrame:
+    return build_features(pd.DataFrame([values]))
