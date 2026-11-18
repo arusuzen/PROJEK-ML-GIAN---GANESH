@@ -29,18 +29,18 @@
     "waktu_isi_tahan_s",
     "indeks_laju_tekanan"
   ],
-  "threshold": 0.049211989417529106,
+  "threshold": 0.04326132005185688,
   "metrics": {
-    "validation_pr_auc_baseline": 0.514000364751016,
-    "validation_pr_auc_final": 0.6720095592728714,
-    "test_pr_auc_final": 0.666911939279589,
+    "validation_pr_auc_baseline": 0.5122981646513725,
+    "validation_pr_auc_final": 0.6752253844935622,
+    "test_pr_auc_final": 0.6625651451269365,
     "test_confusion_matrix": {
-      "tn": 2885,
-      "fp": 574,
-      "fn": 39,
-      "tp": 252
+      "tn": 2847,
+      "fp": 612,
+      "fn": 40,
+      "tp": 251
     },
-    "test_cost_idr": 33850000
+    "test_cost_idr": 35300000
   },
   "business_cost_assumption": {
     "FN_idr": 500000,

@@ -18,10 +18,9 @@ RAW_FEATURES = [
     "kelembaban_bahan_pct",
 ]
 
-def clean_data(df: pd.DataFrame) -> pd.DataFrame:
+def clean_data(df: pd.DataFrame, *, convert_fahrenheit: bool = False) -> pd.DataFrame:
     df = df.copy()
 
-    # 1. Rapikan teks kategorikal (spasi, kapital, titik pada 'P.P')
     if "mesin" in df.columns:
         df["mesin"] = df["mesin"].astype(str).str.strip().str.upper()
         df.loc[~df["mesin"].isin(["IM-01", "IM-02", "IM-03", "IM-04"]), "mesin"] = np.nan
@@ -36,7 +35,6 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
         )
         df.loc[~df["bahan"].isin(["PP", "ABS", "PC"]), "bahan"] = np.nan
 
-    # 2. Konversi numerik
     num_cols = [
         "suhu_leleh_C", "suhu_cetakan_C", "tekanan_injeksi_bar",
         "kecepatan_injeksi_mm_s", "waktu_pendinginan_s", "waktu_siklus_s",
@@ -46,11 +44,15 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    # 3. Konversi Fahrenheit -> Celsius pada sensor IM-04 yang tercatat > 380
-    f_mask = df["suhu_leleh_C"] > 380
-    df.loc[f_mask, "suhu_leleh_C"] = (df.loc[f_mask, "suhu_leleh_C"] - 32.0) * 5.0 / 9.0
+    if convert_fahrenheit:
+        f_mask = (
+            df["mesin"].eq("IM-04")
+            & df["suhu_leleh_C"].gt(380)
+        )
+        df.loc[f_mask, "suhu_leleh_C"] = (
+            (df.loc[f_mask, "suhu_leleh_C"] - 32.0) * 5.0 / 9.0
+        )
 
-    # 4. Ubah nilai fisik mustahil menjadi NaN agar diimputasi pipeline
     df.loc[(df["suhu_leleh_C"] < 100) | (df["suhu_leleh_C"] > 400), "suhu_leleh_C"] = np.nan
     df.loc[(df["suhu_cetakan_C"] <= 0) | (df["suhu_cetakan_C"] > 200), "suhu_cetakan_C"] = np.nan
     df.loc[df["tekanan_injeksi_bar"] <= 0, "tekanan_injeksi_bar"] = np.nan
@@ -59,14 +61,13 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     df.loc[df["waktu_siklus_s"] <= 0, "waktu_siklus_s"] = np.nan
     df.loc[df["kelembaban_bahan_pct"] < 0, "kelembaban_bahan_pct"] = np.nan
 
-    # Siklus penuh tidak mungkin <= waktu pendinginan
     invalid_cycle = df["waktu_siklus_s"] <= df["waktu_pendinginan_s"]
     df.loc[invalid_cycle, ["waktu_siklus_s", "waktu_pendinginan_s"]] = np.nan
 
     return df
 
-def build_features(df: pd.DataFrame) -> pd.DataFrame:
-    df = clean_data(df)
+def build_features(df: pd.DataFrame, *, convert_fahrenheit: bool = False) -> pd.DataFrame:
+    df = clean_data(df, convert_fahrenheit=convert_fahrenheit)
 
     std_leleh = df["bahan"].map(STD_SUHU_LELEH)
     std_cetakan = df["bahan"].map(STD_SUHU_CETAKAN)
