@@ -1,14 +1,25 @@
+from pathlib import Path
 import json
 import joblib
 import streamlit as st
 
 from src.features import prepare_features
 
+PROJECT_DIR = Path(__file__).resolve().parent
+MODEL_PATH = PROJECT_DIR / "models" / "model.joblib"
+METADATA_PATH = PROJECT_DIR / "models" / "metadata.json"
+
 @st.cache_resource
 def load_artifacts():
-    model = joblib.load("C:\\Users\\ASUS\\OneDrive\\Documents\\PROJEK ML GIAN & GANESH\\models\\model.joblib")
-    with open("C:\\Users\\ASUS\\OneDrive\\Documents\\PROJEK ML GIAN & GANESH\\models\\metadata.json", encoding="utf-8") as f:
+    if not MODEL_PATH.exists():
+        raise FileNotFoundError(f"Model tidak ditemukan: {MODEL_PATH}")
+    if not METADATA_PATH.exists():
+        raise FileNotFoundError(f"Metadata tidak ditemukan: {METADATA_PATH}")
+
+    model = joblib.load(MODEL_PATH)
+    with METADATA_PATH.open(encoding="utf-8") as f:
         metadata = json.load(f)
+
     return model, metadata
 
 model, metadata = load_artifacts()
