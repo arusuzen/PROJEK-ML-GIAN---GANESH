@@ -3,9 +3,7 @@
 
 Aplikasi web interaktif dan model *machine learning* untuk memprediksi probabilitas kecacatan komponen plastik (tutup botol, rumah komponen, klip) secara *real-time* berdasarkan parameter satu siklus cetak pada mesin *injection molding* (Pabrik Komponen Plastik — Cikarang).
 
-**Link Aplikasi Web (Streamlit):** *(tempel tautan Streamlit Cloud di sini)*
 
----
 
 ## 1. Ringkasan Masalah & Tujuan Bisnis
 
