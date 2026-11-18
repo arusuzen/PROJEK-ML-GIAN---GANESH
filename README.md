@@ -10,7 +10,7 @@ Aplikasi web interaktif dan model *machine learning* untuk memprediksi probabili
 2. [Pipeline Data & Rekayasa Fitur (`src/features.py`)](#2-pipeline-data--rekayasa-fitur-srcfeaturespy)
 3. [Hasil Pemodelan & Optimasi Threshold (`Tugas_ML_inject.ipynb`)](#3-hasil-pemodelan--optimasi-threshold-tugas_ml_injectipynb)
 4. [Struktur Repositori](#4-struktur-repositori)
-5. [Panduan Instalasi & Penggunaan](#5-panduan-instalasi--penggunaan)
+5. [Penggunaan](#5-penggunaan)
 6. [Kontributor](#6-kontributor)
 
 ---
