@@ -61,3 +61,17 @@ Seluruh alur pengolahan data dirancang secara modular agar transformasi fitur pa
                                   [app.py (Streamlit)]
                                    • Input parameter siklus operator
                                    • Prediksi probabilitas & keputusan QC
+
+
+PROJEK-ML-GIAN---GANESH/
+├── app.py                   # Aplikasi web interaktif Streamlit untuk operator QC
+├── Tugas_ML_inject.ipynb    # Notebook EDA, pelatihan model, tuning threshold, & evaluasi
+├── requirements.txt         # Daftar dependensi library Python
+├── raw.csv                  # Dataset mentah historis mesin injection molding (25.350 baris)
+├── data/
+│   └── test.csv             # Dataset pengujian (15% stratified split — 3.750 baris)
+├── models/
+│   ├── model.joblib         # Artefak pipeline HistGradientBoostingClassifier terlatih
+│   └── metadata.json        # Konfigurasi daftar fitur, threshold optimal (0.0497), & metrik
+└── src/
+    └── features.py          # Modul pembersihan & rekayasa fitur: clean_data(), build_features(), prepare_features()
