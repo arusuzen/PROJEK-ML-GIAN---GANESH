@@ -42,10 +42,10 @@ Data dibagi secara *stratified* menjadi **70% Train (17.500)**, **15% Validation
 
 ### Optimasi Threshold Biaya Bisnis
 Berdasarkan pencarian *threshold* pada *validation set* untuk meminimalkan total biaya $\text{Total Biaya} = (\text{FN} \times \text{Rp500.000}) + (\text{FP} \times \text{Rp25.000})$:
-* **Threshold Optimal:** **`0,0497`** (`4,97%`)
+* **Threshold Optimal:** **`0,0492`** (`4,92%`)
 * **Performa pada *Test Set* (3.750 komponen; 291 cacat aktual):**
-  * **Recall Kelas Cacat:** **86,25%** (`TP = 251`, `FN = 40`, `FP = 569`, `TN = 2.890`)
-  * **Estimasi Penghematan Biaya:** Menekan potensi kerugian dari **Rp145.500.000** (tanpa model) menjadi **Rp34.225.000** (penghematan **Rp111.275.000** atau **76,48%**).
+  * **Recall Kelas Cacat:** **86,60%** (`TP = 252`, `FN = 39`, `FP = 574`, `TN = 2.885`)
+  * **Estimasi Penghematan Biaya:** Menekan potensi kerugian dari **Rp145.500.000** (tanpa model) menjadi **Rp33.850.000** (penghematan **Rp111.650.000** atau **76,74%**).
 
 ---
 
@@ -60,6 +60,6 @@ Berdasarkan pencarian *threshold* pada *validation set* untuk meminimalkan total
 │   └── test.csv             # Data uji (15% stratified split)
 ├── models/
 │   ├── model.joblib         # Pipeline model HistGradientBoostingClassifier terlatih
-│   └── metadata.json        # Konfigurasi fitur, threshold optimal (0.0497), dan metrik
+│   └── metadata.json        # Konfigurasi fitur, threshold optimal (0.0492), dan metrik
 └── src/
     └── features.py          # Fungsi clean_data(), build_features(), dan prepare_features()
